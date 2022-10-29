@@ -2,11 +2,13 @@
 CANBUS can;
 void setup()
 {
-  can.startUp();
+  //can.startUp();
 }
 
 void loop()
 {
+  can.parse();
+  can.send(4, 6);
   //can.looper();
   //can.setMsg();
 }
