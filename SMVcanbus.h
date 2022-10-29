@@ -6,14 +6,14 @@
 
 CAN_message_t message;
 
-void callBack(const CAN_message_t &msg)
+void callBack(const CAN_message_t &msg) //setting the global message var
 {
     message = msg;
 }
 //Preface: this was designed for the can2.0 protocol, this will not work for anything else
 class CANBUS{
     public:
-    CANBUS()
+    CANBUS() //initialize the starting settings for CANBUS
     {
         FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_16> Can0;
         //Serial.begin(115200); delay(400);
@@ -27,27 +27,26 @@ class CANBUS{
         Can0.mailboxStatus();
         return;
     }
-    void parse()
+    void parse() //gets the mail and sets the global var to the message
     {
         Can0.events();
         Can0.onReceive(callBack);
         this->setMsg();
     }
     String read();
-    void setMsg()
+    void setMsg() //sets the message
     {
         this->msg = message;
     }
-    /*void looper()
+    void looper() //MANDATORY CALL In the loop: One Can0.events() needs to be in the loop
     {
         Can0.events();
-        Can0.onReceive(this->setMsg);
-    }*/
-    void send(int message, int id)
+    }
+    void send(int message, int id) //send message
     {
         CAN_message_t msg;
         msg.id = id;
-        for ( uint8_t i = 0; i < 8; i++ ) msg.buf[i] = i + 1;
+        for ( uint8_t i = 0; i < 8; i++ ) msg.buf[i] = i + 1; //currently set to giberish, fix later
         Can0.write(msg);
     }
     private:
@@ -56,12 +55,12 @@ class CANBUS{
 };
 
 String CANBUS::read() {
-    uint32_t first = msg.id << 21 >> 28;
-    uint32_t last = msg.id << 28 >> 28;
+    uint32_t first = msg.id << 21 >> 28; //greab the first 4 bits
+    uint32_t last = msg.id << 28 >> 28; //grab the last 4 bits
     Serial.println("First: " + String(first));
     Serial.println("Last: " + String(last));
 
-    switch(first)
+    switch(first) //case statement for identification
     {
         case 1:
         return "Motor";
