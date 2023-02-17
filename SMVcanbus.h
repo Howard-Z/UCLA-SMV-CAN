@@ -17,6 +17,7 @@ class CANBUS{
     void setIDs();
     String getHardware(){ return hardware; }
     String getDataType(){ return dataType; }
+    CAN_message_t getMessage(){ return msg; }
     private:
     CAN_message_t msg;
     FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_16> Can0;

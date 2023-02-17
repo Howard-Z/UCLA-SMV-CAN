@@ -2,7 +2,7 @@
 CANBUS can;
 void setup()
 {
-  //can.startUp();
+  
 }
 
 void loop()
