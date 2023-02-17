@@ -1,10 +1,13 @@
 #include <FlexCAN_T4.h>
 #include <String>
 #include "SMVcanbus.h"
+#include "ids.h"
+
+CAN_message_t globalMessage;
 
 void callBack(const CAN_message_t &msg) //setting the global message var
 {
-    message = msg;
+    globalMessage = msg;
 }
 
 CANBUS::CANBUS() //initialize the starting settings for CANBUS
@@ -31,41 +34,40 @@ void CANBUS::parse() //gets the mail and sets the global var to the message
 
 void CANBUS::setMsg() //sets the message
 {
-    this->msg = message;
+    this->msg = globalMessage;
 }
 
-void CANBUS::send(uint64_t message, uint16_t id) //send message
+void CANBUS::send(uint8_t message, uint16_t id) //send message
 {
     CAN_message_t msg;
     msg.id = id;
-    msg.buf = message;
+    msg.buf[0] = message;
     Can0.write(msg);
 }
 
 void CANBUS::setIDs()
 {
     first = msg.id << 21 >> 28; //greab the first 4 bits
-    last = msg.id << 28 >> 28; //grab the last 4 bits
+    last = msg.id << 27 >> 27; //grab the last 4 bits
 }
 
 void CANBUS::readHardware() {
-    switch(first) //case statement for identification
-    {
-        case 1:
-            hardware = "Motor";
-            break;
-        case 2:
-            hardware= "b";
-            break;
-    }
+    hardware = devices[first];
 }
 
 void CANBUS::readDataType()
 {
-    switch (last)
+    switch (first)
     {
+        case 0:
         case 1:
-            dataType = "RPM";
+            dataType = motorMessage[last];
+            break;
+        case 2:
+            dataType = jouleMessage[last];
+            break;
+        case 3:
+            dataType = steeringMessage[last];
             break;
     }
 }
