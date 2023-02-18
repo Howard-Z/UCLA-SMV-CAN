@@ -7,13 +7,13 @@
 namespace SMVcanbus //we use a name space to keep track of the message that the global callback function produces.
 {
     CAN_message_t msg; //the global message variable
-    bool isMessage = false; //is there a new message available
+    static bool isMessage = false; //is there a new message available
 
     void callback(const CAN_message_t& mesg)
     {
         msg = mesg; //setting the message
         isMessage = true; //setting the flag that there is a message available
-        //Serial.println("calling back"); //debugging
+        //Serial.println(msg.timestamp); //debugging
     }
 }
 
@@ -49,6 +49,14 @@ void CANBUS::parser() //takes the message if there is a new one and processes it
         this->msg = SMVcanbus::msg; //sets the current message we are working with
         SMVcanbus::isMessage = false; //changes the boolean to say that there is no new message anymore
         setIDs(); //sets the IDs
+        Serial.print("The Buffer is: ");
+        for ( uint8_t i = 0; i < 8; i++ )
+        { 
+            Serial.print(msg.buf[i], DEC);
+        }
+        Serial.print(" The ID is: ");
+        Serial.print(msg.id);
+        Serial.println();
     }
     return;
 }
