@@ -1,5 +1,5 @@
 #include <FlexCAN_T4.h>
-FlexCAN_T4<CAN1, RX_SIZE_256, TX_SIZE_16> Can0;
+FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_16> Can0;
 
 void setup(void) {
   Serial.begin(115200); delay(400);
