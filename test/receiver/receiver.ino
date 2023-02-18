@@ -33,7 +33,7 @@ void loop() {
   can.getEvents();
   static uint32_t timeout = millis();
   if ( millis() - timeout > 200 && can.isThere()) {
-    can.parse();
+    can.parser();
     CAN_message_t mesg = can.getMessage();
     for ( uint8_t i = 0; i < 8; i++ )
     {

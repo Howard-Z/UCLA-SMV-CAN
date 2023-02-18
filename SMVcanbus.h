@@ -9,9 +9,9 @@
 class CANBUS{
     public:
         CANBUS();
-        void getEvents(); //This function must be present in the loop function to receive CAN messages
+        void getEvents(); //This function MUST BE PRESENT in the loop function to receive CAN messages
         //void parse();
-        void parser(const CAN_message_t& mesg); //if there is a message, process it
+        void parser(); //if there is a message, process it
         void send(uint8_t* message, uint16_t id); //sends a message (takes in an 8 element array of uint8_t)
         void setIDs(); //set the IDs based on the message
         uint32_t getFirst() { return first; } //get the first 4 bits

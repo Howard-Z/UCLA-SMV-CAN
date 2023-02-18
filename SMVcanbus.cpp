@@ -42,7 +42,7 @@ void CANBUS::getEvents() //see's if there's a new message, if there is, run the 
     Can0.events();
 }
 
-void CANBUS::parser(const CAN_message_t& mesg) //takes the message if there is a new one and processes it
+void CANBUS::parser() //takes the message if there is a new one and processes it
 {
     if (SMVcanbus::isMessage)
     {
