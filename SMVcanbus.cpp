@@ -42,26 +42,14 @@ void CANBUS::getEvents() //see's if there's a new message, if there is, run the 
     Can0.events();
 }
 
-void CANBUS::parser() //takes the message if there is a new one and processes it
+void CANBUS::parse() //takes the message if there is a new one and processes it
 {
-    if (SMVcanbus::isMessage)
-    {
-        this->msg = SMVcanbus::msg; //sets the current message we are working with
-        SMVcanbus::isMessage = false; //changes the boolean to say that there is no new message anymore
-        setIDs(); //sets the IDs
-        Serial.print("The Buffer is: ");
-        for ( uint8_t i = 0; i < 8; i++ )
-        { 
-            Serial.print(msg.buf[i], DEC);
-        }
-        Serial.print(" The ID is: ");
-        Serial.print(msg.id);
-        Serial.println();
-    }
+    this->msg = SMVcanbus::msg; //sets the current message we are working with
+    setIDs(); //sets the IDs
     return;
 }
 /* //old parse function
-void CANBUS::parse() //gets the mail and sets the global var to the message
+void CANBUS::parser() //gets the mail and sets the global var to the message
 {
     Can0.events();
     this->setMsg();
@@ -70,25 +58,62 @@ void CANBUS::parse() //gets the mail and sets the global var to the message
     this->readDataType();
 }*/
 
+CAN_message_t CANBUS::getMessage() //tries to get the message is there is a new one else return the previous one
+{
+    if(SMVcanbus::isMessage)
+    {
+        SMVcanbus::isMessage = false;
+        return SMVcanbus::msg;
+    }
+    else{
+        return msg;
+    }
+}
 
-void CANBUS::send(uint8_t* message, uint16_t id) //send message (potential problem if you try and send faster than 1 per 200 ms
+long long CANBUS::ArrToInt(uint8_t* arr) //converting btye array to integer
+{
+    long long output = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        output <<= 8;
+        output += arr[i];
+    }
+    return output;
+}
+
+void CANBUS::IntToArr(long long num, uint8_t* arr) //converting integer to byte array
+{
+    for (int i = 0; i < 8; i++)
+    {
+        arr[8 - i - 1] = (uint8_t)(num & 0xFF);
+        num >>= 8;
+    }
+}
+void CANBUS::send(long long message, uint16_t id) //send message (potential problem if you try and send faster than 1 per 200 ms
 {
     CAN_message_t mesg;
     mesg.id = id; //set the id field
-    for (int i = 0; i < 8; i++) //buffer is broken down into 8 uint8_t sections, ,loop through them and set it
+    uint8_t arr[8];
+    IntToArr(message, arr);
+    for(int i = 0; i < 8; i++)
     {
-        mesg.buf[i] = message[i];
+        mesg.buf[i] = arr[i];
     }
     Can0.write(mesg);//send the message
 }
 
+long long CANBUS::getData() //return the buffer in long long form
+{
+    CAN_message_t message = getMessage();
+    return ArrToInt(message.buf);
+}
 void CANBUS::setIDs()
 {
     first = msg.id << 21 >> 28; //greab the first 4 bits
     last = msg.id << 27 >> 27; //grab the last 4 bits
 }
 
-bool CANBUS::isThere()
+bool CANBUS::isThere() //MUST BE USED TO CHECK FOR DUPLICATE MESSAGES
 {
     return SMVcanbus::isMessage; //checks if there's a message available
 }

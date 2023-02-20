@@ -8,5 +8,13 @@ void setup(void) {
 
 void loop() {
   can.getEvents();
-  can.parser();
+  can.parse();
+  if(can.isThere())
+  {
+    Serial.print("The data is: ");
+    Serial.println(can.getData());
+    Serial.print(" The ID is: ");
+    Serial.print(can.getID());
+    Serial.println();
+  }
 }

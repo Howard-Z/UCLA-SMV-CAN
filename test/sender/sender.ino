@@ -7,9 +7,9 @@ void setup(void) {
 
 void loop() {
   can.getEvents();
-  uint8_t arr[8] = {42, 69, 72, 18, 34, 56, 64, 92};
+  long long data = 348957398;
   uint16_t id = millis() % 10;
   Serial.println(id);
-  can.send(arr, id);
+  can.send(data, id);
   delay(1003);
 }
