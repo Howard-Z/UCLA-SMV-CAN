@@ -90,10 +90,15 @@ void CANBUS::IntToArr(long long num, uint8_t* arr) //converting integer to byte 
         num >>= 8;
     }
 }
-void CANBUS::send(long long message) //send message (potential problem if you try and send faster than 1 per 200 ms
+
+int CANBUS::getIDField(int DataType)
+{
+    return (device_id << 7) + DataType;
+}
+void CANBUS::send(long long message, int dataType) //send message (potential problem if you try and send faster than 1 per 200 ms
 {
     CAN_message_t mesg;
-    mesg.id = device_id; //set the id field
+    mesg.id = getIDField(dataType); //set the id field
     uint8_t arr[8];
     IntToArr(message, arr);
     for(int i = 0; i < 8; i++)
@@ -112,6 +117,8 @@ void CANBUS::setIDs()
 {
     first = msg.id << 21 >> 28; //greab the first 4 bits
     last = msg.id << 27 >> 27; //grab the last 4 bits
+    readHardware();
+    readDataType();
 }
 
 bool CANBUS::isThere() //MUST BE USED TO CHECK FOR DUPLICATE MESSAGES

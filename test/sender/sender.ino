@@ -8,6 +8,6 @@ void setup(void) {
 void loop() {
   can.getEvents();
   long long data = millis() % 7;
-  can.send(data);
+  can.send(data, Motor_Current);
   delay(1003);
 }
