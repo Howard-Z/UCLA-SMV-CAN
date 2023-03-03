@@ -23,7 +23,7 @@ void testCallback(const CAN_message_t& mesg) //debugging test callback function
 }
 
 
-CANBUS::CANBUS() //initialize the starting settings for CANBUS
+CANBUS::CANBUS(int id) //initialize the starting settings for CANBUS
 {
     //FlexCAN_T4<CAN2, RX_SIZE_256, TX_SIZE_16> Can0; //not actually needed bc it's taken care of in the constructor
     Can0.begin();
@@ -34,6 +34,7 @@ CANBUS::CANBUS() //initialize the starting settings for CANBUS
     Can0.onReceive(SMVcanbus::callback);
     //Can0.onReceive(testCallback); //debugging
     Can0.mailboxStatus();
+    device_id = id;
     return;
 }
 
@@ -89,10 +90,10 @@ void CANBUS::IntToArr(long long num, uint8_t* arr) //converting integer to byte 
         num >>= 8;
     }
 }
-void CANBUS::send(long long message, uint16_t id) //send message (potential problem if you try and send faster than 1 per 200 ms
+void CANBUS::send(long long message) //send message (potential problem if you try and send faster than 1 per 200 ms
 {
     CAN_message_t mesg;
-    mesg.id = id; //set the id field
+    mesg.id = device_id; //set the id field
     uint8_t arr[8];
     IntToArr(message, arr);
     for(int i = 0; i < 8; i++)
