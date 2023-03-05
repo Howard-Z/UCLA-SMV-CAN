@@ -14,12 +14,14 @@ class CANBUS{
         void parse(); //if there is a message, process it
         long long ArrToInt(uint8_t* arr);
         void IntToArr(long long num, uint8_t* arr);
-        void send(long long message, int dataType); //sends a message (takes in an 8 element array of uint8_t)
+        //void send(long long message, int dataType); //sends a message (takes in an 8 element array of uint8_t)
+        void send(double message, int dataType);
         void setIDs(); //set the IDs based on the message
         int getID() {return msg.id;}
         uint32_t getFirst() { return first; } //get the first 4 bits
         uint32_t getLast() { return last; } //get the last 4 bits
-        long long getData(); //returns the data in signed long long form
+        //long long getData(); //returns the data in signed long long form
+        double getData();
         String getHardware(){ return hardware; } //returns what hardware
         String getDataType(){ return dataType; } //returns what datatype
         CAN_message_t getMessage();//returns the raw CAN message

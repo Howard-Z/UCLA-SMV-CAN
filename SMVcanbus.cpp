@@ -22,6 +22,11 @@ void testCallback(const CAN_message_t& mesg) //debugging test callback function
     Serial.println("there is an event");
 }
 
+union DoubleCaster//this is for type casting between double and int array
+{
+    double num;
+    uint8_t arr[8];
+};
 
 CANBUS::CANBUS(int id) //initialize the starting settings for CANBUS
 {
@@ -49,15 +54,6 @@ void CANBUS::parse() //takes the message if there is a new one and processes it
     setIDs(); //sets the IDs
     return;
 }
-/* //old parse function
-void CANBUS::parser() //gets the mail and sets the global var to the message
-{
-    Can0.events();
-    this->setMsg();
-    this->setIDs();
-    this->readHardware();
-    this->readDataType();
-}*/
 
 CAN_message_t CANBUS::getMessage() //tries to get the message is there is a new one else return the previous one
 {
@@ -82,6 +78,7 @@ long long CANBUS::ArrToInt(uint8_t* arr) //converting btye array to integer
     return output;
 }
 
+
 void CANBUS::IntToArr(long long num, uint8_t* arr) //converting integer to byte array
 {
     for (int i = 0; i < 8; i++)
@@ -95,23 +92,46 @@ int CANBUS::getIDField(int DataType)
 {
     return (device_id << 7) + DataType;
 }
-void CANBUS::send(long long message, int dataType) //send message (potential problem if you try and send faster than 1 per 200 ms
+// void CANBUS::send(long long message, int dataType) //send message as int
+// {
+//     CAN_message_t mesg;
+//     mesg.id = getIDField(dataType); //set the id field
+//     uint8_t arr[8];
+//     IntToArr(message, arr);
+//     for(int i = 0; i < 8; i++)
+//     {
+//         mesg.buf[i] = arr[i];
+//     }
+//     Can0.write(mesg);//send the message
+// }
+
+void CANBUS::send(double message, int dataType) //send message as float
 {
+    DoubleCaster c = {message};
     CAN_message_t mesg;
     mesg.id = getIDField(dataType); //set the id field
-    uint8_t arr[8];
-    IntToArr(message, arr);
     for(int i = 0; i < 8; i++)
     {
-        mesg.buf[i] = arr[i];
+        mesg.buf[i] = c.arr[i];
     }
     Can0.write(mesg);//send the message
 }
 
-long long CANBUS::getData() //return the buffer in long long form
+// long long CANBUS::getData() //return the buffer in long long form
+// {
+//     CAN_message_t message = getMessage();
+//     return ArrToInt(message.buf);
+// }
+
+double CANBUS::getData()
 {
     CAN_message_t message = getMessage();
-    return ArrToInt(message.buf);
+    DoubleCaster c;
+    for(int i = 0; i < 8; i++)
+    {
+        c.arr[i] = message.buf[i];
+    }
+    return c.num;
 }
 void CANBUS::setIDs()
 {
