@@ -159,7 +159,7 @@ void CANBUS::readDataType()
         dataType = motorMessage[last];
         break;
     case 2:
-        dataType = jouleMessage[last];
+        dataType = powerMessage[last];
         break;
     case 3:
         dataType = steeringMessage[last];
