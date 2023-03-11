@@ -34,8 +34,8 @@ CANBUS::CANBUS(int id) //initialize the starting settings for CANBUS
     Can0.begin();
     Can0.setBaudRate(1000000);
     Can0.setMaxMB(16);
-    Can0.enableFIFO();
-    Can0.enableFIFOInterrupt();
+    //Can0.enableFIFO();
+    //Can0.enableFIFOInterrupt();
     Can0.onReceive(SMVcanbus::callback);
     //Can0.onReceive(testCallback); //debugging
     Can0.mailboxStatus();
