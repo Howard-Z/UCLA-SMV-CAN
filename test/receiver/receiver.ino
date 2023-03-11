@@ -1,14 +1,12 @@
 #include "SMVcanbus.h"
-#include "ids.h"
-CANBUS can(Joulemeter);
+CANBUS can(Bear_1);
 
 void setup(void) {
   Serial.begin(115200); delay(400);
 }
 
 void loop() {
-  can.getEvents();
-  can.parse();
+  can.looper();
   if(can.isThere())
   {
     Serial.print("The data is: ");
@@ -18,4 +16,5 @@ void loop() {
     Serial.print("The Data Type is: ");
     Serial.println(can.getDataType());
   }
+  //delay(20);
 }

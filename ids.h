@@ -1,10 +1,14 @@
+#ifndef UCLASMVCANIDS
+#define UCLASMVCANIDS
+
 #include <String>
 
 enum devices {
     Bear_1,
     Bear_2,
     Power_Control,
-    Steering_Wheel
+    Steering_Wheel,
+    DAQ
 };
 const String devices[] = {
     "Bear 1",
@@ -62,6 +66,16 @@ const String steeringMessage[] = {
     "Error Status"
 };
 
+enum DAQMessage {
+    Longitude,
+    Latitude,
+    Speed
+};
+const String DAQMessage[] = {
+    "Longitude",
+    "Latitude",
+    "Speed"
+};
 
 /* deprecated test devices
 const String devices[] = {"Motor 1", "Motor 2", "Joulemeter", "Steering"};
@@ -80,3 +94,5 @@ enum jouleMessage {Joule_Current, Total_kWh, Current_Power};
 
 enum steeringMessage {Headlights, Left, Right, Horn};
 */
+
+#endif
