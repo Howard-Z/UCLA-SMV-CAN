@@ -1,5 +1,4 @@
 #include "SMVcanbus.h"
-#include "ids.h"
 CANBUS can(Bear_1);
 double data = 1.123;
 void setup(void) {
