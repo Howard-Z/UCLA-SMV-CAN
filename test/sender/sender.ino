@@ -1,13 +1,13 @@
 #include "SMVcanbus.h"
-#include "ids.h"
-CANBUS can(Motor1);
+CANBUS can(Bear_1);
+double data = 1.123;
 void setup(void) {
   Serial.begin(115200); delay(400);
 }
 
 void loop() {
-  can.getEvents();
-  long long data = millis() % 7;
-  can.send(data, Motor_Current);
-  delay(1003);
+  can.send(data, RPM);
+  Serial.println(data);
+  data = data + 0.001;
+  delay(20); //be careful with the speed that you send at, beware of out of order
 }
