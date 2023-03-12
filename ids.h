@@ -57,7 +57,7 @@ const String powerMessage[] = {
     "Error Status"
 };
 
-enum sterringMessage{
+enum steeringMessage{
     Switch_Encoding,
     S_Error_Status
 };
