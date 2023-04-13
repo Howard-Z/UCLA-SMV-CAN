@@ -8,6 +8,8 @@ Designed for the Teensy 4.0 and 4.1 (at least that's what I tested it on, other 
 
 ## Installing
 
+You must first install the FlexCAN_T4 library stated above. This can be done by visiting the GitHub link above, downloading the ZIP file of the repository and copying it into the Arduino libraries folder.
+
 Clone the repository into the Arduino libraries folder
 
 Import the library by inserting in your code:
