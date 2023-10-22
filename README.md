@@ -4,7 +4,7 @@ This is the UCLA Bruin Racing SMV implementation of the FlexCAN Library for Teen
 
 https://github.com/tonton81/FlexCAN_T4
 
-Designed for the Teensy 4.0 and 4.1 (at least that's what I tested it on, other Teensy models may be compatible - see FlexCAN_T4). This library takes advantage of the CAN2.0 protocol.
+Designed for the Teensy 4.0 and 4.1 (at least that's what I tested it on, other Teensy models may be compatible - see FlexCAN_T4). This library takes advantage of the CAN2.0 protocol. NOT CANFD
 
 ## Installing
 
@@ -137,3 +137,15 @@ enum DAQMessage {
     Speed
 };
 ```
+
+## Potential Upgrades
+* Maybe we can implement a sequence number to mitigate out of order packets
+
+* Use mailboxes and filters
+  * Allows us to use the Ids field only for Ids
+  * Potential efficiency savings because every teensy gets every message but only cares about the one meant for itself
+    * Right now I am implementing the packet discarding based on ID, really should use the built in functionality for mailboxes
+
+* Find something better than an enum address book
+
+* Consider CANFD for higher bandwidth

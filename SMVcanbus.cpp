@@ -42,7 +42,7 @@ CAN_message_t CANBUS::getMessage() //tries to get the message is there is a new 
 }
 
 
-int CANBUS::getIDField(int DataType)
+int CANBUS::getIDField(int DataType) //Bit shifting to get the ID Field
 {
     return (device_id << 7) + DataType;
 }
@@ -52,7 +52,7 @@ void CANBUS::send(double message, int dataType) //send message as float
     DoubleCaster c = {message}; //cast the message to byte array
     CAN_message_t mesg;
     mesg.id = getIDField(dataType); //set the id field
-    for(int i = 0; i < 8; i++)
+    for(int i = 0; i < 8; i++) //send the byte chunks
     {
         mesg.buf[i] = c.arr[i];
     }
@@ -61,14 +61,21 @@ void CANBUS::send(double message, int dataType) //send message as float
 
 double CANBUS::getData()
 {
-    CAN_message_t message = getMessage();
-    DoubleCaster c;
+    CAN_message_t message = getMessage(); //get the received message
+    DoubleCaster c; //convert back from an int array
     for(int i = 0; i < 8; i++)
     {
         c.arr[i] = message.buf[i];
     }
     return c.num;
 }
+
+// NOTE: When I discussed this with Kenson we agreed on this schema:
+// The id field in a message contains 11 bits
+// We are using ONLY the FIRST 4 and LAST 4 bits
+// This leaves the middle 3 bits that are currently unused
+// This is done because the payload is only 64 bytes and the double data type is 64 bytes
+
 void CANBUS::setIDs()
 {
     first = msg.id << 21 >> 28; //greab the first 4 bits
