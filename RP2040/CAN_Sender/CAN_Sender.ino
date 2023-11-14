@@ -26,7 +26,8 @@
 Adafruit_MCP2515 mcp(CS_PIN);
 //
 
-
+#include "smv_utils.h"
+DoubleCaster c = {0};
 //CODE BEGINS HERE
 //Setup, also ignore!
 void setup() {
@@ -44,15 +45,22 @@ void setup() {
 
 void loop() {
   //Let's create a packet!
-  mcp.beginPacket(0x00); //Our ID
-  mcp.write('H'); //Add first byte of data (one char = one byte)
-  mcp.write('e'); //Second byte
-  mcp.write('l'); //Third byte
-  mcp.write('l'); //Fourth byte
-  mcp.write('o'); //Fifth byte
+  int first = Power_Control;
+  int last = Power;
+  mcp.beginPacket(getIDField(first, last)); //Our ID
+  for(int i = 0; i < 8; i++)
+  {
+    mcp.write(c.arr[i]);
+  }
+  // mcp.write('H'); //Add first byte of data (one char = one byte)
+  // mcp.write('e'); //Second byte
+  // mcp.write('l'); //Third byte
+  // mcp.write('l'); //Fourth byte
+  // mcp.write('o'); //Fifth byte
   mcp.endPacket(); //End and send our packet!
 
   Serial.println("Sent packet!");
+  c.num += 1.5;
 
   //Add a delay of 1 second (so a message every second)
   delay(1000);
