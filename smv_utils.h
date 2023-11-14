@@ -126,6 +126,7 @@ String readDataType(int first, int last)
         return steeringMessage[last];
         break;
     }
+    return "";
 }
 /* deprecated test devices
 const String devices[] = {"Motor 1", "Motor 2", "Joulemeter", "Steering"};
