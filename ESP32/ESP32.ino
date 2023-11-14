@@ -1,6 +1,12 @@
 #include <HardwareSerial.h>
+#include <String>
+#include "smv_utils.h"
+
 HardwareSerial SerialPort(2); // use UART2
-char number  = ' ';
+//giving the cast an initial value could cause bad data only for the first packet
+DoubleCaster c = {0};
+int first = 0;
+int last = 0;
 void setup()
 {
   Serial.begin(115200);
@@ -9,10 +15,21 @@ void setup()
 }
 void loop()
 {
+  bool write_flag = false;
   if (SerialPort.available())
   {
-    char number = SerialPort.read();
-    Serial.println(number);
- 
+    write_flag = true;
+    for(int i = 0; i < 8; i++)
+    {
+      c.arr[i] = SerialPort.read();
+    }
+    first = (int)SerialPort.read();
+    last = (int)SerialPort.read();
+  }
+  if (write_flag)
+  {
+    Serial.println(c.num);
+    Serial.println(first);
+    Serial.println(last);
   }
 }

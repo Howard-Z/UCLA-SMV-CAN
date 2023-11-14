@@ -26,7 +26,7 @@
 Adafruit_MCP2515 mcp(CS_PIN);
 //
 
-
+#include "smv_utils.h"
 //CODE BEGINS HERE
 //Setup, also ignore!
 void setup() {
@@ -47,18 +47,19 @@ void setup() {
 void loop() {
   //If we find a packet..
   if(mcp.parsePacket()) {
-    //And that packet has the ID we're looking for..
-    if(mcp.packetId() == 0x00) {
-      //Loop over every byte in the packet till the end
-      while(mcp.available()) {
-        //Then print the character in sequence!
-        char in = (char)mcp.read();
-        Serial.print(in); //Interpret chars
-        Serial1.write((in));
-      }
-      //Add a newline once the packet is finished
-      Serial.println();
+    //Loop over every byte in the packet till the end
+    int id = mcp.packetId();
+    int first = getFirst(id);
+    int last = getLast(id);
+    while(mcp.available()) {
+      //Then print the character in sequence!
+      char in = (char)mcp.read();
+      Serial.print(in); //Interpret chars
+      Serial1.write((in));
     }
+    Serial1.write(first);
+    Serial1.write(last);
+    //Add a newline once the packet is finished
+    Serial.println();
   }
-
 }
