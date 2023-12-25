@@ -14,7 +14,8 @@ const String devices[] = {
     "Bear_1",
     "Bear_2",
     "Power_Control",
-    "Steering_Wheel"
+    "Steering_Wheel",
+    "DAQ"
 };
 
 enum motorMessage {
@@ -124,6 +125,9 @@ String readDataType(int first, int last)
         break;
     case 3:
         return steeringMessage[last];
+        break;
+    case 4:
+        return DAQMessage[last];
         break;
     }
     return "";

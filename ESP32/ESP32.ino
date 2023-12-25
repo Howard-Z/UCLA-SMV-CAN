@@ -1,12 +1,11 @@
 #include <HardwareSerial.h>
 #include <String>
 #include "smv_utils.h"
-
 #include <WiFi.h>
 #include <MQTT.h>
 
-const char ssid[] = "2b||!2b";
-const char pass[] = "UCLAengineering";
+const char ssid[] = "FiOS-XKWHX";
+const char pass[] = "maps4932kin3727bbq";
 
 WiFiClient net;
 MQTTClient client;
@@ -19,7 +18,7 @@ void connect() {
   }
 
   Serial.print("\nconnecting...");
-  while (!client.connect("ESP32", "homeassistant", "gelaithah9ajiecohlahteigeizeeCuNeichoow5thaaquiPhaCh5quu6zoo0ael")) {
+  while (!client.connect("ESP32", "smv", "E07Y7LwX5z")) {
     Serial.print(".");
     delay(1000);
   }
@@ -45,7 +44,7 @@ void setup()
   Serial.begin(115200);
   SerialPort.begin(115200, SERIAL_8N1, 16, 17);
   WiFi.begin(ssid, pass);
-  client.begin("192.168.1.130", net);
+  client.begin("smv.seas.ucla.edu", net);
 }
 void loop()
 {
@@ -72,6 +71,9 @@ void loop()
     Serial.println(first);
     Serial.println(last);
     client.publish(getTopic(first, last), (String)c.num);
+    Serial.println("First is: " + (String)first);
+    Serial.println("Last is: " + (String)last);
+    Serial.println("The topic is: " + getTopic(first, last));
   }
   
 }
