@@ -8,27 +8,28 @@ void setup() {
   CAN.setPins(16, 17);
   while (!Serial);
 
-  Serial.println("CAN Receiver Callback");
+  Serial.println("CAN Sender");
 
   // start the CAN bus at 500 kbps
-  if (!CAN.begin(500000)) {
+  if (!CAN.begin(500E3)) {
     Serial.println("Starting CAN failed!");
     while (1);
   }
-
-  // register the receive callback
-  CAN.onReceive(onReceive);
 }
 
 void loop() {
-  delay(10);
-  // do nothing
+  // send packet: id is 11 bits, packet can contain up to 8 bytes of data
+  Serial.print("Sending packet ... ");
+  CAN.beginPacket(0x12);
+  CAN.write('h');
+  CAN.write('e');
+  CAN.write('l');
+  CAN.write('l');
+  CAN.write('o');
+  CAN.endPacket();
+
+  Serial.println("done");
+
+  delay(1000);
+
 }
-
-void onReceive(int packetSize) {
-  // received a packet
-  Serial.print("Received ");
-
-  Serial.println();
-}
-
