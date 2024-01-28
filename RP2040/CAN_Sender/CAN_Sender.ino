@@ -22,7 +22,7 @@
 #else
    #define CS_PIN    5
 #endif
-#define CAN_BAUDRATE (1000000)
+#define CAN_BAUDRATE (500000)
 Adafruit_MCP2515 mcp(CS_PIN);
 //
 

@@ -11,7 +11,7 @@ void setup() {
   Serial.println("CAN Receiver Callback");
 
   // start the CAN bus at 500 kbps
-  if (!CAN.begin(500000)) {
+  if (!CAN.begin(1000000)) {
     Serial.println("Starting CAN failed!");
     while (1);
   }
@@ -23,6 +23,7 @@ void setup() {
 void loop() {
   delay(10);
   // do nothing
+  // Serial.print("Running");
 }
 
 void onReceive(int packetSize) {
