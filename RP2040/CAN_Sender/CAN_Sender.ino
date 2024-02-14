@@ -28,9 +28,12 @@ Adafruit_MCP2515 mcp(CS_PIN);
 
 #include "smv_utils.h"
 DoubleCaster c = {0};
+int led = LED_BUILTIN;
+bool led_status = false;
 //CODE BEGINS HERE
 //Setup, also ignore!
 void setup() {
+  pinMode(led, OUTPUT);
   Serial.begin(115200);
   while(!Serial) delay(10);
 
@@ -44,9 +47,11 @@ void setup() {
 }
 
 void loop() {
+  digitalWrite(led, led_status);
+  led_status = !led_status;
   //Let's create a packet!
-  int first = Power_Control;
-  int last = Power;
+  int first = DAQ;
+  int last = Speed;
   mcp.beginPacket(getIDField(first, last)); //Our ID
   for(int i = 0; i < 8; i++)
   {
@@ -64,6 +69,5 @@ void loop() {
 
   //Add a delay of 1 second (so a message every second)
   delay(1000);
-
-
 }
+
