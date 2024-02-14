@@ -1,24 +1,53 @@
-// Copyright (c) Sandeep Mistry. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
+#include <HardwareSerial.h>
+#include <String>
+#include "smv_utils.h"
+#include <WiFi.h>
+#include <MQTT.h>
 #include <CAN.h>
+const char ssid[] = "Hphone";
+const char pass[] = "bruinsmv123";
 
-void setup() {
-  Serial.begin(9600);
-<<<<<<< Updated upstream
+WiFiClient net;
+MQTTClient client;
+int first = 0;
+int last = 0;
+// Initialize a DoubleCaster union to hold the payload data
+DoubleCaster caster;
+bool write_flag = false;
+
+void connect() {
+  Serial.print("checking wifi...");
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print(".");
+    delay(1000);
+  }
+
+  Serial.print("\nconnecting...");
+  while (!client.connect("ESP32", "smv", "E07Y7LwX5z")) {
+    Serial.print(".");
+    delay(1000);
+  }
+
+  Serial.println("\nconnected!");
+}
+
+String getTopic(int first, int last)
+{
+  String output = "/";
+  output += readHardware(first) + "/";
+  output += readDataType(first, last);
+  return output;
+}
+
+void setup()
+{
+  Serial.begin(115200);
+  WiFi.begin(ssid, pass);
+  client.begin("smv.seas.ucla.edu", net);
+
   CAN.setPins(16, 17);
-=======
->>>>>>> Stashed changes
-  while (!Serial);
-
-  Serial.println("CAN Receiver Callback");
-
   // start the CAN bus at 500 kbps
-<<<<<<< Updated upstream
-  if (!CAN.begin(500000)) {
-=======
-  if (!CAN.begin(500E3)) {
->>>>>>> Stashed changes
+  if (!CAN.begin(1000E3)) {
     Serial.println("Starting CAN failed!");
     while (1);
   }
@@ -26,50 +55,48 @@ void setup() {
   // register the receive callback
   CAN.onReceive(onReceive);
 }
+void loop()
+{
+  client.loop();
+  delay(10);  // <- fixes some issues with WiFi stability
 
-void loop() {
-<<<<<<< Updated upstream
-  delay(10);
-=======
->>>>>>> Stashed changes
-  // do nothing
+  if (!client.connected()) {
+    connect();
+  }
+  if(write_flag)
+  {
+    client.publish(getTopic(first, last), (String)caster.num);
+    write_flag = false;
+  }
 }
 
 void onReceive(int packetSize) {
   // received a packet
   Serial.print("Received ");
 
-<<<<<<< Updated upstream
   Serial.println();
-}
 
-=======
-  if (CAN.packetExtended()) {
-    Serial.print("extended ");
-  }
+  if (packetSize) {
+    int packetId = CAN.packetId();
+    first = getFirst(packetId);
+    last = getLast(packetId);
 
-  if (CAN.packetRtr()) {
-    // Remote transmission request, packet contains no data
-    Serial.print("RTR ");
-  }
+    // Print the 'first' and 'last' fields
+    Serial.print("First: ");
+    Serial.print(readHardware(first)); // Using the readHardware function to get the hardware type
+    Serial.print(", Last: ");
+    Serial.println(readDataType(first, last)); // Using the readDataType function to get the message type
 
-  Serial.print("packet with id 0x");
-  Serial.print(CAN.packetId(), HEX);
-
-  if (CAN.packetRtr()) {
-    Serial.print(" and requested length ");
-    Serial.println(CAN.packetDlc());
-  } else {
-    Serial.print(" and length ");
-    Serial.println(packetSize);
-
-    // only print packet data for non-RTR packets
-    while (CAN.available()) {
-      Serial.print((char)CAN.read());
+    // Read the payload byte by byte into the DoubleCaster array
+    for (int i = 0; i < 8; i++) {
+      caster.arr[i] = CAN.read();
     }
-    Serial.println();
-  }
 
-  Serial.println();
+    // Now the double value is in caster.num
+    Serial.print("Payload (as double): ");
+    Serial.println(caster.num, 6); // Print the double value with 6 decimal places
+    write_flag = true;
+  }
+  
+
 }
->>>>>>> Stashed changes
