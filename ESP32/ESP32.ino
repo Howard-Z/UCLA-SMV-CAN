@@ -47,6 +47,7 @@ void setup()
 
   CAN.setPins(16, 17);
   // start the CAN bus at 500 kbps
+
   if (!CAN.begin(1000E3)) {
     Serial.println("Starting CAN failed!");
     while (1);
@@ -60,6 +61,13 @@ void loop()
   client.loop();
   delay(10);  // <- fixes some issues with WiFi stability
 
+
+void loop() {
+  client.loop()
+  delay(10);
+  // do nothing
+  // Serial.print("Running");
+
   if (!client.connected()) {
     connect();
   }
@@ -68,6 +76,7 @@ void loop()
     client.publish(getTopic(first, last), (String)caster.num);
     write_flag = false;
   }
+
 }
 
 void onReceive(int packetSize) {
