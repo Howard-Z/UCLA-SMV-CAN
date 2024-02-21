@@ -1,5 +1,5 @@
-#ifndef UCLASMVCANIDS
-#define UCLASMVCANIDS
+#ifndef UCLASMVUTILS
+#define UCLASMVUTILS
 
 #include <String>
 
@@ -11,10 +11,10 @@ enum devices {
     DAQ
 };
 const String devices[] = {
-    "Bear 1",
-    "Bear 2",
-    "Power Control",
-    "Steering Wheel"
+    "Bear_1",
+    "Bear_2",
+    "Power_Control",
+    "Steering_Wheel"
 };
 
 enum motorMessage {
@@ -28,12 +28,12 @@ enum motorMessage {
 };
 const String motorMessage[] = {
     "RPM",
-    "Motor State",
+    "Motor_State",
     "Cruise",
-    "Error Status",
+    "Error_Status",
     "Throttle",
     "Brake",
-    "Meter Count"
+    "Meter_Count"
 };
 
 enum powerMessage {
@@ -41,9 +41,9 @@ enum powerMessage {
     Voltage,
     Power,
     Energy,
-    T1,
-    T2,
-    T3,
+    Temp1,
+    Temp2,
+    Temp3,
     P_Error_Status
 };
 const String powerMessage[] = {
@@ -51,10 +51,10 @@ const String powerMessage[] = {
     "Voltage",
     "Power",
     "Energy",
-    "Temp Sensor 1",
-    "Temp Sensor 2",
-    "Temp Sensor 3",
-    "Error Status"
+    "Temp_Sensor_1",
+    "Temp_Sensor_2",
+    "Temp_Sensor_3",
+    "Error_Status"
 };
 
 enum steeringMessage{
@@ -62,8 +62,8 @@ enum steeringMessage{
     S_Error_Status
 };
 const String steeringMessage[] = {
-    "Switch Encoding",
-    "Error Status"
+    "Switch_Encoding",
+    "Error_Status"
 };
 
 enum DAQMessage {
@@ -71,12 +71,63 @@ enum DAQMessage {
     Latitude,
     Speed
 };
+
 const String DAQMessage[] = {
     "Longitude",
     "Latitude",
     "Speed"
 };
 
+union DoubleCaster//this is for type casting between double and int array
+{
+    double num;
+    uint8_t arr[8];
+};
+
+// int setIDs(int first, int last)
+// {
+//     first = msg.id << 21 >> 28; //greab the first 4 bits
+//     last = msg.id << 27 >> 27; //grab the last 4 bits
+//     readHardware();
+//     readDataType();
+// }
+
+int getIDField(int first, int last)
+{
+    return (first << 7) + last;
+}
+
+int getFirst(int id)
+{
+    return id << 21 >> 28; 
+}
+
+int getLast(int id)
+{
+    return id << 27 >> 27; 
+}
+
+String readHardware(int first) {
+    return devices[first];
+}
+
+String readDataType(int first, int last)
+{
+    switch (first)
+    {
+    case 0:
+    case 1:
+        return motorMessage[last];
+        break;
+    case 2:
+        return powerMessage[last];
+        break;
+    case 3:
+        return steeringMessage[last];
+        break;
+    }
+    return "";
+}
 /* deprecated test devices
 const String devices[] = {"Motor 1", "Motor 2", "Joulemeter", "Steering"};
 const String motorMessage[] = {"RPM", "Motor Current", "Braking", "Temperature Sensor", "Ratcheting", "Cruising", "Steering Reading", "Hall Sensor State", "Hall Sensor Value", "Bus Voltage", "Gate Drive High/in (a, b, c) input logic", "Gate drive lod / sd (a, b, c) input logic", "PID setpoint", "PID current value"};
@@ -94,5 +145,4 @@ enum jouleMessage {Joule_Current, Total_kWh, Current_Power};
 
 enum steeringMessage {Headlights, Left, Right, Horn};
 */
-
 #endif
