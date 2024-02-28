@@ -3,7 +3,7 @@
 #include <string.h>
 #include "id_chars.h"
 
-// CANBUS can(Bear_1);
+CANBUS can(Bear_1);
 
 void setup(void){
   Serial.begin(115200);
@@ -12,17 +12,15 @@ void setup(void){
 }
 
 void loop(){
-  // can.looper();
-  // if(can.isThere())
-  // {
-  //   Serial.print("The data is: ");
-  //   Serial.println(can.getData());
-  //   Serial.print("The Hardware Type is: ");
-  //   Serial.println(can.getHardware());
-  //   Serial.print("The Data Type is: ");
-  //   Serial.println(can.getDataType());
-  // }
-  Serial.println("WAT THE FUCK");
-  // Serial.println(PIN_CAN_CS);
+  can.looper();
+  if(can.isThere())
+  {
+    Serial.print("The data is: ");
+    Serial.println(can.getData());
+    Serial.print("The Hardware Type is: ");
+    Serial.println(can.getHardware());
+    Serial.print("The Data Type is: ");
+    Serial.println(can.getDataType());
+  }
   delay(20);
 }

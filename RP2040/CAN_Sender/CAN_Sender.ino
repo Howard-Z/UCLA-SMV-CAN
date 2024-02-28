@@ -3,7 +3,7 @@
 #include <string.h>
 
 #include <Adafruit_MCP2515.h>
-// Adafruit_MCP2515 mcp(PIN_CAN_CS);
+
 
 CANBUS can(Bear_1);
 double data = 1.5;
