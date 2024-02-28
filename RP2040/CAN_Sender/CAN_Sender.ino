@@ -19,4 +19,5 @@ void loop(){
   can.send(data, RPM);
   delay(500);
   data += 1.5;
+  Serial.println("sent packet!");
 }

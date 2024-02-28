@@ -1,13 +1,13 @@
 #include "S_CAN_RP2040.h"
 #include "ids.h"
 #include <string.h>
-#include "id_chars.h"
+// #include "id_chars.h"
 
 CANBUS can(Bear_1);
 
 void setup(void){
   Serial.begin(115200);
-  
+  can.begin();
   delay(400); //for printing
 }
 
