@@ -27,5 +27,4 @@ class CANBUS{
         Adafruit_MCP2515 mcp;
 };
 
-
 #endif

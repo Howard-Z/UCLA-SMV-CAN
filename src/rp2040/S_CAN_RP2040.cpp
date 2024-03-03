@@ -1,11 +1,11 @@
+#if defined(ARDUINO_ADAFRUIT_FEATHER_RP2040_CAN)
 #include "S_CAN_RP2040.h"
-#include "smv_utils.h"
+#include "../util/smv_utils.h"
 #include <string.h>
-#include "id_chars.h"
+#include "../util/id_chars.h"
 #define CAN_BAUDRATE (500000)
 
 #include <Adafruit_MCP2515.h>
-
 
 CANBUS::CANBUS(int id) : mcp(PIN_CAN_CS)//initialize the starting settings for CANBUS
 {
@@ -64,3 +64,5 @@ double CANBUS::getData()
     isMessage = false;
     return data;
 }
+
+#endif
