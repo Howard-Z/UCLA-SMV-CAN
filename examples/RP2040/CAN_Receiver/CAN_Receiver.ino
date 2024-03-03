@@ -1,7 +1,4 @@
-#include "S_CAN_RP2040.h"
-#include "ids.h"
-#include <string.h>
-// #include "id_chars.h"
+#include "SMVcanbus.h"
 
 CANBUS can(Bear_1);
 

@@ -2,8 +2,6 @@
 #include "ids.h"
 #include <string.h>
 
-#include <Adafruit_MCP2515.h>
-
 
 CANBUS can(Bear_1);
 double data = 1.5;
