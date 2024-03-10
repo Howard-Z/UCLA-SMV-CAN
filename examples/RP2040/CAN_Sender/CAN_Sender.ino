@@ -7,7 +7,7 @@ double data = 1.5;
 
 void setup(void){
   Serial.begin(115200);
-  // can.begin();
+  can.begin();
   
   delay(400); //for printing
 }
