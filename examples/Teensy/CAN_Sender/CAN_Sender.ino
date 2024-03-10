@@ -1,13 +1,10 @@
 #include "SMVcanbus.h"
-#include <string.h>
-
 
 CANBUS can(Bear_1);
 double data = 1.5;
 
 void setup(void){
   Serial.begin(115200);
-  // can.begin();
   
   delay(400); //for printing
 }
