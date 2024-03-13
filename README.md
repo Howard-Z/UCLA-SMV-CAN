@@ -17,7 +17,9 @@ For the Teensy 4, we will be using the FlexCAN_T4 library
 
 #### Installing Prerequisites
 
-You must install the FlexCAN_T4 library by adding it into your library folder.
+We rely on the FlexCAN_T4 library that should already be included when you set up Arduino IDE with the Teensy boards, but if you don't have it installed you can find it here:
+
+If you don't have the FlexCAN_T4 library, you must install it by adding it into your library folder.
 
 Go to https://github.com/tonton81/FlexCAN_T4 or click [here](https://github.com/tonton81/FlexCAN_T4) and clone the repository into Arduino IDE's library folder (see [Note 1](#1.-Location-of-Library-Folder) for help)
 
@@ -33,7 +35,7 @@ Following the Adafruit guide found [here](https://learn.adafruit.com/adafruit-rp
 Afterwards you must install this library by cloning it into Arduino IDE's library folder (see [Note 1](#1.-Location-of-Library-Folder) for help)
 
 ### ESP32
-Documentation is a work in progress, contact Howard if needed.
+This is mainly for DAQ team members to develop since this is a one off board for the car. See the examples folder for actual implementation
 
 ## Using the Library
 
