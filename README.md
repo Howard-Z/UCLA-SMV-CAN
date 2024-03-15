@@ -156,8 +156,8 @@ This function is only necessary for the RP2040 version **ONLY** it will not comp
 enum devices {
     Bear_1,
     Bear_2,
-    Power_Control,
-    Steering_Wheel,
+    UI,
+    HS,
     DAQ
 };
 
@@ -171,20 +171,27 @@ enum motorMessage {
     Meter_Count
 };
 
-enum powerMessage {
-    Current,
-    Voltage,
-    Power,
-    Energy,
-    Temp1,
-    Temp2,
-    Temp3,
-    P_Error_Status
+enum UIMessage {
+    Blink_Left,
+    Blink_Right,
+    Reverse,
+    Headlights,
+    Wipers,
+    Hazard,
+    Button,
+    Switch,
+    Motor,
+    Horn,
+    DAQ
 };
 
-enum steeringMessage{
-    Switch_Encoding,
-    S_Error_Status
+enum HSMessage {
+    Gyro_x,
+    Gyro_y,
+    Gyro_z,
+    Accel,
+    Magnetometer,
+    Temp
 };
 
 enum DAQMessage {

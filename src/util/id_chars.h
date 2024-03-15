@@ -4,8 +4,9 @@
 const char* devices[] = {
     "Bear_1",
     "Bear_2",
-    "Power_Control",
-    "Steering_Wheel"
+    "UI",
+    "HS",
+    "DAQ"
 };
 
 
@@ -19,20 +20,26 @@ const char* motorMessage[] = {
     "Meter_Count"
 };
 
-const char* powerMessage[] = {
-    "Current",
-    "Voltage",
-    "Power",
-    "Energy",
-    "Temp_Sensor_1",
-    "Temp_Sensor_2",
-    "Temp_Sensor_3",
-    "Error_Status"
+const char* UIMessage[] = {
+    "Blink_Left",
+    "Blink_Right",
+    "Reverse",
+    "Headlights",
+    "Wipers",
+    "Hazard",
+    "Button",
+    "Switch",
+    "Motor",
+    "DAQ"
 };
 
-const char* steeringMessage[] = {
-    "Switch_Encoding",
-    "Error_Status"
+const char* HSMessage[] = {
+    "Gyro_x",
+    "Gyro_y",
+    "Gyro_z",
+    "Accel",
+    "Magnetometer",
+    "Temp",
 };
 
 const char* DAQMessage[] = {
@@ -55,10 +62,13 @@ const char* readDataType(int first, int last)
         return motorMessage[last];
         break;
     case 2:
-        return powerMessage[last];
+        return UIMessage[last];
         break;
     case 3:
-        return steeringMessage[last];
+        return HSMessage[last];
+        break;
+    case 4:
+        return DAQMessage[last];
         break;
     }
     return "";
