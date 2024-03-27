@@ -158,7 +158,7 @@ enum devices {
     Bear_2,
     UI,
     HS,
-    DAQ
+    DAQ_Board
 };
 
 enum motorMessage {
@@ -182,7 +182,7 @@ enum UIMessage {
     Switch,
     Motor,
     Horn,
-    DAQ
+    DAQ_Button
 };
 
 enum HSMessage {
