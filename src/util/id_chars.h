@@ -6,7 +6,7 @@ const char* devices[] = {
     "Bear_2",
     "UI",
     "HS",
-    "DAQ"
+    "DAQ_Board"
 };
 
 
@@ -30,7 +30,7 @@ const char* UIMessage[] = {
     "Button",
     "Switch",
     "Motor",
-    "DAQ"
+    "DAQ_Button"
 };
 
 const char* HSMessage[] = {

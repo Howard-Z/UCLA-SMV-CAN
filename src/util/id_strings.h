@@ -7,7 +7,7 @@ const String devices[] = {
     "Bear_2",
     "UI",
     "HS",
-    "DAQ"
+    "DAQ_Board"
 };
 
 
@@ -31,7 +31,7 @@ const String UIMessage[] = {
     "Button",
     "Switch",
     "Motor",
-    "DAQ"
+    "DAQ_Button"
 };
 
 const String HSMessage[] = {
