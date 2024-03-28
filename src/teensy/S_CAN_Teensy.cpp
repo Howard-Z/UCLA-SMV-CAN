@@ -1,8 +1,12 @@
 #if defined(TEENSYDUINO) //THIS IS BAD AND STUPID AND I HATE IT
+
+// TODO: Side note future me. This code does not use the id_strings header because I was lazy
+// Fix this at some point
+
 #include <FlexCAN_T4.h>
 #include <String>
 #include "S_CAN_Teensy.h"
-#include "../util/id_strings.h"
+#include "../util/id_strings.h" // <---- Actaully use this shit
 #include "../util/smv_utils.h"
 
 CANBUS::CANBUS(int id) //initialize the starting settings for CANBUS
@@ -91,12 +95,16 @@ void CANBUS::readDataType()
         dataType = motorMessage[last];
         break;
     case 2:
-        dataType = powerMessage[last];
+        dataType = UIMessage[last];
         break;
     case 3:
-        dataType = steeringMessage[last];
+        dataType = HSMessage[last];
+        break;
+    case 4:
+        dataType = DAQMessage[last];
         break;
     }
+    dataType = "";
 }
 
 #endif
