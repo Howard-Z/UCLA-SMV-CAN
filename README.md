@@ -1,5 +1,5 @@
 # UCLA SMV CAN Bus Library
-This is the UCLA Bruin Racing SMV CAN Bus communication library for the ESP32, Teensy 4, and RP2040 CAN. This guide **DOES NOT** cover wiring guides.
+This is the UCLA Bruin Racing SMV CAN Bus communication library for the ESP32, Teensy 4, and RP2040 CAN. This guide **DOES NOT** cover wiring guides. This library can be found in the *Arduino library manager** by simply searching "UCLA".
 
 ## Hardware Overview
 For this library we are using 3 different microcontrollers
