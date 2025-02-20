@@ -3,7 +3,7 @@
 #include "SMVcanbus.h"
 #include <WiFi.h>
 #include <MQTT.h>
-#include <CAN.h>
+
 const char ssid[] = "Hphone";
 const char pass[] = "bruinsmv123";
 

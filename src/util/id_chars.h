@@ -3,21 +3,25 @@
 
 const char* devices[] = {
     "Bear_1",
-    "Bear_2",
     "UI",
-    "HS",
-    "DAQ_Board"
+    "HS1",
+    "HS2",
+    "HS3",
+    "HS4",
+    "FC",
+    "Joule_H",
+    "Joule_L",
+    "Safety",
+    "DAQ_Board",
 };
 
 
 const char* motorMessage[] = {
-    "RPM",
-    "Motor_State",
-    "Cruise",
-    "Error_Status",
-    "Throttle",
-    "Brake",
-    "Meter_Count"
+    "Hall_velocity",
+    "Torque_motor",
+    "Current",
+    "Board_Temp",
+    "Motor_Temp",
 };
 
 const char* UIMessage[] = {
@@ -30,16 +34,28 @@ const char* UIMessage[] = {
     "Button",
     "Switch",
     "Motor",
-    "DAQ_Button"
+    "Horn",
+    "DAQ_Button",
 };
 
 const char* HSMessage[] = {
     "Gyro_x",
     "Gyro_y",
     "Gyro_z",
-    "Accel",
-    "Magnetometer",
-    "Temp",
+    "Accel_x",
+    "Accel_y",
+    "Accel_z",
+    "Pressure",
+    "Torque_HS",
+};
+
+const char* FrontcenterMessage[] = {
+    "Gas",
+    "Brake",
+};
+
+const char* JoulemeterMessage[] = {
+    "Power",
 };
 
 const char* DAQMessage[] = {
@@ -47,7 +63,6 @@ const char* DAQMessage[] = {
     "Latitude",
     "Speed"
 };
-
 
 const char* readHardware(int first) {
     return devices[first];
@@ -58,16 +73,28 @@ const char* readDataType(int first, int last)
     switch (first)
     {
     case 0:
-    case 1:
         return motorMessage[last];
         break;
-    case 2:
+    case 1:
         return UIMessage[last];
         break;
+    case 2:
     case 3:
+    case 4:
+    case 5:
         return HSMessage[last];
         break;
-    case 4:
+    case 6:
+        return FrontcenterMessage[last];
+        break;
+    case 7:
+    case 8:
+        return JoulemeterMessage[last];
+        break;
+    case 9:
+        return "Safety";
+        break;
+    case 10:
         return DAQMessage[last];
         break;
     }

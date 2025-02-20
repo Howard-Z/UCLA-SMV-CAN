@@ -4,21 +4,25 @@
 
 const String devices[] = {
     "Bear_1",
-    "Bear_2",
     "UI",
-    "HS",
-    "DAQ_Board"
+    "HS1",
+    "HS2",
+    "HS3",
+    "HS4",
+    "FC",
+    "Joule_H",
+    "Joule_L",
+    "Safety",
+    "DAQ_Board",
 };
 
 
 const String motorMessage[] = {
-    "RPM",
-    "Motor_State",
-    "Cruise",
-    "Error_Status",
-    "Throttle",
-    "Brake",
-    "Meter_Count"
+    "Hall_velocity",
+    "Torque_motor",
+    "Current",
+    "Board_Temp",
+    "Motor_Temp",
 };
 
 const String UIMessage[] = {
@@ -31,16 +35,28 @@ const String UIMessage[] = {
     "Button",
     "Switch",
     "Motor",
-    "DAQ_Button"
+    "Horn",
+    "DAQ_Button",
 };
 
 const String HSMessage[] = {
     "Gyro_x",
     "Gyro_y",
     "Gyro_z",
-    "Accel",
-    "Magnetometer",
-    "Temp",
+    "Accel_x",
+    "Accel_y",
+    "Accel_z",
+    "Pressure",
+    "Torque_HS",
+};
+
+const String FrontcenterMessage[] = {
+    "Gas",
+    "Brake",
+};
+
+const String JoulemeterMessage[] = {
+    "Power",
 };
 
 const String DAQMessage[] = {
