@@ -10,7 +10,7 @@ void setup(void){
 }
 
 void loop(){
-  can.send(data, RPM);
+  can.send(data, Current);
   delay(500);
   data += 1.5;
   Serial.println("sent packet!");

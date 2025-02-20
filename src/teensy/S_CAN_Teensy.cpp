@@ -73,38 +73,13 @@ void CANBUS::setIDs()
 {
     first = msg.id << 21 >> 28; //greab the first 4 bits
     last = msg.id << 27 >> 27; //grab the last 4 bits
-    readHardware();
-    readDataType();
+    dataType = readHardware(first);
+    dataType = readDataType(first, last);
 }
 
 bool CANBUS::isThere() //MUST BE USED TO CHECK FOR DUPLICATE MESSAGES
 {
     return isMessage; //checks if there's a message available
-}
-
-void CANBUS::readHardware() {
-    hardware = devices[first];
-}
-
-void CANBUS::readDataType()
-{
-    switch (first)
-    {
-    case 0:
-    case 1:
-        dataType = motorMessage[last];
-        break;
-    case 2:
-        dataType = UIMessage[last];
-        break;
-    case 3:
-        dataType = HSMessage[last];
-        break;
-    case 4:
-        dataType = DAQMessage[last];
-        break;
-    }
-    dataType = "";
 }
 
 #endif

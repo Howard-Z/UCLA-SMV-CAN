@@ -75,16 +75,28 @@ String readDataType(int first, int last)
     switch (first)
     {
     case 0:
-    case 1:
         return motorMessage[last];
         break;
-    case 2:
+    case 1:
         return UIMessage[last];
         break;
+    case 2:
     case 3:
+    case 4:
+    case 5:
         return HSMessage[last];
         break;
-    case 4:
+    case 6:
+        return FrontcenterMessage[last];
+        break;
+    case 7:
+    case 8:
+        return JoulemeterMessage[last];
+        break;
+    case 9:
+        return "Safety";
+        break;
+    case 10:
         return DAQMessage[last];
         break;
     }

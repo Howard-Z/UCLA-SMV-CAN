@@ -20,8 +20,6 @@ class CANBUS{
     private:
         void callback(); //get message and set IDs
         int getID() {return msg.id;}
-        void readHardware(); //use the first 4 bits to determine hardware
-        void readDataType();//use the whole ID to determine data type
         CAN_message_t getMessage();//returns the raw CAN message
         uint32_t getFirst() { return first; } //get the first 4 bits
         uint32_t getLast() { return last; } //get the last 4 bits
