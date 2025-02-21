@@ -155,20 +155,24 @@ This function is only necessary for the RP2040 version **ONLY** it will not comp
 ```
 enum devices {
     Bear_1,
-    Bear_2,
     UI,
-    HS,
+    HS1,
+    HS2,
+    HS3,
+    HS4,
+    FC,
+    Joule_H,
+    Joule_L,
+    Safety,
     DAQ_Board
 };
 
 enum motorMessage {
-    RPM,
-    Motor_State,
-    Cruise,
-    M_Error_Status,
-    Throttle,
-    Brake,
-    Meter_Count
+    Hall_velocity,
+    Torque_motor,
+    Current,
+    Board_Temp,
+    Motor_Temp,
 };
 
 enum UIMessage {
@@ -189,9 +193,20 @@ enum HSMessage {
     Gyro_x,
     Gyro_y,
     Gyro_z,
-    Accel,
-    Magnetometer,
-    Temp
+    Accel_x,
+    Accel_y,
+    Accel_z,
+    Pressure,
+    Torque_HS
+};
+
+enum FCMessage {
+    Gas,
+    Brake
+};
+
+enum JouleMessage {
+    Power
 };
 
 enum DAQMessage {
